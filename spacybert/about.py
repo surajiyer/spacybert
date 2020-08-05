@@ -1,5 +1,5 @@
 __title__ = 'spacybert'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __summary__ = 'spaCy pipeline component for adding Bert embedding meta data to Doc, Token and Span objects.'
 __uri__ = 'https://github.com/surajiyer/spacybert'
 __author__ = 'Suraj Iyer'

@@ -16,7 +16,7 @@ with readme_path.open('r', encoding='utf8') as f:
     readme = f.read()
 
 install_requires = [
-    'torch==1.4.0+cpu',
+    'torch>=1.4.0',
     'transformers>=3.0.0',
     'spacy>=2.2.1,<3.0.0',
     'spacy-langdetect>=0.1.2'

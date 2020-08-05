@@ -7,6 +7,7 @@ from typing import Dict, NewType
 
 
 LANG_ISO_639_1 = NewType('LANG_ISO_639_1', str)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 # initialize logging
@@ -81,7 +82,7 @@ class BertInference:
         self.tokenizer = BertTokenizer.from_pretrained(from_pretrained)
 
         # initialize the BERT model object
-        self.bert_layer = BertModel.from_pretrained(from_pretrained)
+        self.bert_layer = BertModel.from_pretrained(from_pretrained).to(device)
 
         self.attr_name = attr_name
         self.max_seq_len = max_seq_len
@@ -116,10 +117,10 @@ class BertInference:
         tokens_ids = self.tokenizer.convert_tokens_to_ids(tokens)
 
         # converting the list to a pytorch tensor
-        tokens_ids_tensor = torch.tensor(tokens_ids).unsqueeze(0)
+        tokens_ids_tensor = torch.tensor(tokens_ids).unsqueeze(0).to(device)
 
         # obtaining the attention mask i.e a tensor containing 1s for no padded tokens and 0s for padded ones
-        attn_mask = (tokens_ids_tensor != 0).long().unsqueeze(0)
+        attn_mask = (tokens_ids_tensor != 0).long().unsqueeze(0).to(device)
 
         # feeding the input to BERT model to obtain contextualized representations
         doc_repr = self.bert_layer(
